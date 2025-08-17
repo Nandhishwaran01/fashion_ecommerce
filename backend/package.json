@@ -1,12 +1,11 @@
 {
-	"name": "e-commerce-store",
+	"name": "e-commerce-backend",
 	"version": "1.0.0",
 	"description": "",
-	"main": "backend/server.js",
+	"main": "server.js",
 	"scripts": {
 		"dev": "nodemon server.js",
-		"start": "node server.js",
-		"build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
+		"start": "node server.js"
 	},
 	"keywords": [],
 	"author": "",
@@ -19,10 +18,11 @@
 		"cors": "^2.8.5",
 		"dotenv": "^16.6.1",
 		"express": "^4.19.2",
-		"ioredis": "^5.4.1",
+		"ioredis": "^5.7.0",
 		"jsonwebtoken": "^9.0.2",
 		"mongodb": "^6.18.0",
 		"mongoose": "^8.17.1",
+		"redis": "^5.8.1",
 		"stripe": "^16.12.0"
 	},
 	"devDependencies": {
