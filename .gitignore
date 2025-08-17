@@ -43,3 +43,16 @@ backend/coverage
 .env
 .env.local
 .env.production
+# Add environment files to .gitignore
+cat >> .gitignore << 'EOF'
+
+# Environment Variables
+.env
+.env.local
+.env.production
+.env.development
+backend/.env
+backend/.env.production
+frontend/.env
+frontend/.env.local
+EOF
