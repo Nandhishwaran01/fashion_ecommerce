@@ -39,3 +39,7 @@ backend/coverage
 *.key
 *.crt
 *.jks           
+# Environment files
+.env
+.env.local
+.env.production
