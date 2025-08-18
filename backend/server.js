@@ -20,10 +20,11 @@ const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
 
 app.use(cors({
-	origin: process.env.CLIENT_URL,PORT,
-	methods: ["GET", "POST", "PUT", "DELETE"],
-	allowedHeaders: ["Content-Type", "Authorization"],
-	credentials: true,
+  origin: [
+    'http://localhost:5173',
+    'https://fashion-ecommerce-akol27y6x-nandhishwarans-projects.vercel.app', // actual Vercel URL
+  ],
+  credentials: true
 }));
 
 app.post("/webhook", express.raw({ type: "application/json" }), stripeWebhookHandler);
