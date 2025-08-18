@@ -26,6 +26,7 @@ const couponSchema = new mongoose.Schema(
 			ref: "User",
 			required: true,
 			unique: true,
+			sparse: true, // Ensure userId is stored as a string
 		},
 	},
 	{
