@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-	baseURL: import.meta.mode === "production" ? "https://fashion-ecommerce-brg1.onrender.com" : "/api",
+	baseURL: import.meta.mode === "production" ? "VITE_API_URL" : "/api",
 	withCredentials: true, // send cookies to the server
 });
 
