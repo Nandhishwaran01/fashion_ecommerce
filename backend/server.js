@@ -22,7 +22,7 @@ const __dirname = path.resolve();
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'https://fashion-ecommerce-akol27y6x-nandhishwarans-projects.vercel.app', // actual Vercel URL
+    process.env.CLIENT_URL, // actual Vercel URL
   ],
   credentials: true
 }));
