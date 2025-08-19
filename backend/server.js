@@ -9,20 +9,20 @@ import cartRoutes from "./routes/cart.route.js";
 import couponRoutes from "./routes/coupon.route.js";
 import paymentRoutes from "./routes/payment.route.js";
 import analyticsRoutes from "./routes/analytics.route.js";
-import jwt from "jsonwebtoken";
+//import jwt from "jsonwebtoken";
 import { stripeWebhookHandler } from "./controllers/payment.controller.js";
 import { connectDB } from "./lib/db.js";
 
 dotenv.config();
 
+connectDB();
 const app = express();
 const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
 
 app.use(cors({
   origin: [
-    'http://localhost:5173',
-    process.env.CLIENT_URL, // actual Vercel URL
+    process.env.VITE_CLIENT_URL, // actual Vercel URL
   ],
   credentials: true
 }));
@@ -41,6 +41,6 @@ app.use("/api/analytics", analyticsRoutes);
 
 
 app.listen(PORT, () => {
-	console.log("Server is running on http://localhost:" + PORT);
-	connectDB();
+	console.log(`Server is running on PORT ${PORT}`);
+
 });
