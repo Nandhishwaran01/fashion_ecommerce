@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "fashionecommerce-production-9cfd.up.railway.app"
+      "destination": "https://fashion-ecommerce-0bp3.onrender.com"
     }
   ]
 }
