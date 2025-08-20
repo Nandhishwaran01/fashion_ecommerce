@@ -18,24 +18,12 @@ dotenv.config();
 connectDB();
 const app = express();
 const PORT = process.env.PORT || 5000;
-const allowedOrigins = [
-  "http://localhost:5173", // vite local dev
-  "http://localhost:3000", // run react dev server
-  "https://fashion-ecommerce-phl.vercel.app", // production
-  "https://fashion-ecommerce-nandhishwarans-projects.vercel.app", // project domain
-  "https://fashion-ecommerce-bduevbal-nandhishwarans-projects.vercel.app" // preview domain
-];
-
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS: " + origin));
-    }
-  },
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
 
 
 app.post("/webhook", express.raw({ type: "application/json" }), stripeWebhookHandler);
