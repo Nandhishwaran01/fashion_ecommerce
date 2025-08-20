@@ -19,13 +19,22 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const allowedOrigins = [
+  "http://localhost:3000", 
+  "https://fashion-ecommerce.vercel.app"
+];
 
 app.use(cors({
-  origin: [
-    process.env.VITE_CLIENT_URL, // actual Vercel URL
-  ],
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
+
 
 app.post("/webhook", express.raw({ type: "application/json" }), stripeWebhookHandler);
 
