@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 5000;
 
 const allowedOrigins = [
   "http://localhost:3000", 
-  "https://fashion-ecommerce.vercel.app"
+  "https://fashion-ecommerce.vercel.app/api"
 ];
 
 app.use(cors({
