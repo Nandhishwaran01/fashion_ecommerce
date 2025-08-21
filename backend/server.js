@@ -18,9 +18,20 @@ dotenv.config();
 connectDB();
 const app = express();
 const PORT = process.env.PORT || 5000;
+const allowedOrigins = [
+  "https://fashion-ecommerce-phi.vercel.app/"
+  "http://localhost:3000"
+];
+
 app.use(
   cors({
-    origin: "*",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
