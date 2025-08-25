@@ -19,7 +19,7 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 5000;
 const allowedOrigins = [
-    "https://fashion-ecommerce-phi.vercel.app",
+    "https://fashion-ecommerce-phi.vercel.app/api",
     "http://localhost:3000"
 ];
 
