@@ -36,7 +36,7 @@ app.use(
      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   })
 );
-app.options("*", cors({ origin: allowedOrigins, credentials: true }));
+
 
 
 app.post("/webhook", express.raw({ type: "application/json" }), stripeWebhookHandler);
