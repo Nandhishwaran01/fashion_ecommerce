@@ -17,22 +17,27 @@ const generateTokens = (userId) => {
 const storeRefreshToken = async (userId, refreshToken) => {
 	await redis.set(`refresh_token:${userId}`, refreshToken, "EX", 7 * 24 * 60 * 60); // 7days
 };
-
 const setCookies = (res, accessToken, refreshToken) => {
-  const isProduction = process.env.NODE_ENV === "production"; // force prod on Render
+  const isProduction = process.env.NODE_ENV === "production";
 
-  res.cookie("accessToken", accessToken, {
+  // common cookie options
+  const cookieOptions = {
     httpOnly: true,
-    secure: isProduction,
-    sameSite: "none",  // always "none" for cross-site
-    maxAge: 15 * 60 * 1000,
+    secure: isProduction,       // must be true in production for SameSite=None
+    sameSite: "none",           // always "none" for cross-site
+    domain: isProduction ? "fashion-ecommerce-0bp3.onrender.com" : "localhost",
+  };
+
+  // Access token (short-lived)
+  res.cookie("accessToken", accessToken, {
+    ...cookieOptions,
+    maxAge: 15 * 60 * 1000, // 15 minutes
   });
 
+  // Refresh token (long-lived)
   res.cookie("refreshToken", refreshToken, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    maxAge: 7 * 24 * 60 * 60 * 1000,
+    ...cookieOptions,
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   });
 };
 
