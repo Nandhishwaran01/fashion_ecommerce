@@ -108,35 +108,36 @@ export const logout = async (req, res) => {
 
 // this will refresh the access token
 export const refreshToken = async (req, res) => {
-	try {
-		const refreshToken = req.cookies.refreshToken;
+  try {
+    const refreshToken = req.cookies.refreshToken;
 
-		if (!refreshToken) {
-			return res.status(401).json({ message: "No refresh token provided" });
-		}
+    if (!refreshToken) {
+      return res.status(401).json({ message: "No refresh token provided" });
+    }
 
-		const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-		const storedToken = await redis.get(`refresh_token:${decoded.userId}`);
+    const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const storedToken = await redis.get(`refresh_token:${decoded.userId}`);
 
-		if (storedToken !== refreshToken) {
-			return res.status(401).json({ message: "Invalid refresh token" });
-		}
+    if (storedToken !== refreshToken) {
+      return res.status(401).json({ message: "Invalid refresh token" });
+    }
 
-		const accessToken = jwt.sign({ userId: decoded.userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15m" });
+    // Generate new access & refresh tokens
+    const { accessToken, refreshToken: newRefreshToken } = generateTokens(decoded.userId);
 
-		res.cookie("accessToken", accessToken, {
-			httpOnly: true,
-			secure: process.env.NODE_ENV === "production",
-			sameSite: "none",
-			maxAge: 15 * 60 * 1000,
-		});
+    // Store new refresh token in Redis
+    await storeRefreshToken(decoded.userId, newRefreshToken);
 
-		res.json({ message: "Token refreshed successfully" });
-	} catch (error) {
-		console.log("Error in refreshToken controller", error.message);
-		res.status(500).json({ message: "Server error", error: error.message });
-	}
+    // Reset cookies (both access & refresh)
+    setCookies(res, accessToken, newRefreshToken);
+
+    res.json({ message: "Token refreshed successfully" });
+  } catch (error) {
+    console.log("Error in refreshToken controller", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
 };
+
 
 export const getProfile = async (req, res) => {
 	try {
