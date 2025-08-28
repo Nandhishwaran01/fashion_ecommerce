@@ -19,7 +19,7 @@ const storeRefreshToken = async (userId, refreshToken) => {
 };
 
 const setCookies = (res, accessToken, refreshToken) => {
-  const isProduction = process.env.NODE_ENV === "production" || true; // force prod on Render
+  const isProduction = process.env.NODE_ENV === "production"; // force prod on Render
 
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
